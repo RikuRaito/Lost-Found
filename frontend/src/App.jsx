@@ -4,6 +4,7 @@ import Header from './components/Header'
 import Top from './pages/Top'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+import NewItems from './pages/NewItems'
 
 function App() {
   const [currentPage, setCurrentPage] = useState('')
@@ -24,6 +25,7 @@ function App() {
       <Header isLoggedIn={isLoggedIn} />
       <main>
         <Routes>
+          <Route path='new_items' element={<NewItems />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/Signup" element={<Signup />} />
           <Route path="*" element={<Top /> } />
