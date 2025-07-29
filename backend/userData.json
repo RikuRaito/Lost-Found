@@ -1,3 +1,18 @@
 [
-    {"mail":"a@sample.com","pwd":"ccc"}
+    {
+        "email": "a@sample.com",
+        "password": "ccc"
+    },
+    {
+        "email": "b@sample.com",
+        "password": "iii"
+    },
+    {
+        "email": "m@sample.com",
+        "password": "098f6bcd4621d373cade4e832627b4f6"
+    },
+    {
+        "email": "s@sample.com",
+        "password": "9f6e6800cfae7749eb6c486619254b9c"
+    }
 ]
