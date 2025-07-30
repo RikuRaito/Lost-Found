@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
-  // 1) 初期値を localStorage から取得
+  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(
     () => localStorage.getItem('isLoggedIn') === 'true'
   )
@@ -32,6 +33,7 @@ const Login = () => {
       // 認証 OK
       setIsLoggedIn(true)
       localStorage.setItem('email', email)
+      navigate('/');
     } catch (err) {
       console.log('ログイン失敗', err)
     }
