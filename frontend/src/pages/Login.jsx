@@ -6,7 +6,10 @@ const Login = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(
     () => localStorage.getItem('isLoggedIn') === 'true'
   )
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState(() => 
+    isLoggedIn ? (localStorage.getItem('email') || '') : ''
+  );
+
   const [password, setPassword] = useState('')
 
   // 2) isLoggedIn が変わるたびに localStorage を更新
@@ -14,6 +17,28 @@ const Login = () => {
     localStorage.setItem('isLoggedIn', isLoggedIn)
   }, [isLoggedIn])
 
+useEffect(() => {
+  if (!isLoggedIn) return;
+  const fetchUserData = async () => {
+    try {
+      const response = await fetch('/api/get_use_data', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      if (!response.ok) {
+        console.log('エラーが発生しました', response.status);
+        return;
+      }
+      const data = await response.json();
+      const itemId = data.item_id;
+      // TODO: use itemId as needed
+    } catch (err) {
+      console.log('エラー発生', err);
+    }
+  };
+  fetchUserData();
+}, [isLoggedIn, email]);
   // 3) ログイン処理
   const handleSubmit = async (e) => {
     e.preventDefault()

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const items = [
-    "財布", "スマホ", "バッグ", "充電器"
+    "財布", "スマホ", "バッグ", "充電器", "イヤホン"
 ];
 
 const colors = [
