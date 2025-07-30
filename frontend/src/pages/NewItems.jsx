@@ -24,7 +24,17 @@ const NewItems = () => {
     const [itemTags, setItemTags] = useState([])
     const [colorTags, setColorTags] = useState([])
     const [placeTags, setPlaceTags] = useState([])
+    const [isLoggedIn, setIsLoggedIn] = useState(
+        () => localStorage.getItem('isLoggedIn') === 'true'
+    )
+    const [email, setEmail] = useState(() => 
+      isLoggedIn ? (localStorage.getItem('email') || '') : ''
+    );
 
+    const [confirmEmail, setConfirmEmail] = useState(() => 
+      isLoggedIn ? (localStorage.getItem('email') || '') : ''
+    );
+     
     const toggle = (value, list, setter) =>
         list.includes(value)
             ? setter(list.filter((v) => v !== value))
@@ -41,9 +51,6 @@ const NewItems = () => {
         setError('')
     }
 
-    const handleItemTagChange = (e) => {
-        
-    }
 
     const handleSubmit = async() => {
         if (files.length === 0) {
@@ -56,6 +63,7 @@ const NewItems = () => {
         formData.append('item_tags', JSON.stringify(itemTags));
         formData.append('color_tags', JSON.stringify(colorTags));
         formData.append('place_tags', JSON.stringify(placeTags));
+        formData.append('email', email);
         
         try {
             const res = await fetch('api/new_items', {
@@ -148,7 +156,7 @@ const NewItems = () => {
                                     type='button'
                                     onClick={() => toggle(it, placeTags, setPlaceTags)}
                                     className={`px-3 py-1 rounded-full text-sm border hover:bg-blue-200
-                                        ${itemTags.includes(it)
+                                        ${placeTags.includes(it)
                                             ? 'bg-blue-500 text-white border-blue-500'
                                             : 'bg-white text-gray-700 border-gray-300 hover:bg-blue-gray-100'}
                                         `}
@@ -159,13 +167,38 @@ const NewItems = () => {
                         </div>
                     </span>
                 </div>
+                <div>
+                    <span className='text-sm font-medium text-gray-700'>メールアドレス</span>
+                    <p className='text-sm text-gray-600 mb-1'>こちらのメールアドレスを使って落とし物の所有者とコンタクトが可能となります</p>
+                    <input
+                        type='emmail'
+                        placeholder='メールアドレスを入力'
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className='border-2 rouded input input-bordered w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+                        disabled={isLoggedIn}
+                    />
+                    <span className='text-sm font-medium text-gray-700'>メールアドレス(確認)</span>
+                    <input
+                        type='email'
+                        placeholder='メールアドレスを入力(確認)'
+                        value={confirmEmail}
+                        onChange={(e) => setConfirmEmail(e.target.value)}
+                        className='border-2 rouded input input-bordered w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+                        disabled={isLoggedIn}
+                    />
+                </div>
                 {error && <p className='text-red-500 text-sm'>{error}</p>}
                 <button
-                    className='px-6 py-2 rounded-md bg-blue-300 text-white font-semibold
-                    hover:bg-blue-600 active:bg-blue-700 transition-colors'
-                    onClick={handleSubmit}
+                  onClick={handleSubmit}
+                  disabled={email !== confirmEmail}
+                  className={`px-6 py-2 rounded-md text-white font-semibold transition-colors ${
+                    email && confirmEmail && email === confirmEmail
+                      ? 'bg-blue-600 hover:bg-blue-700 active:bg-blue-800'
+                      : 'bg-blue-300 cursor-not-allowed'
+                  }`}
                 >
-                    登録
+                  登録
                 </button>
             </div>
         </main>

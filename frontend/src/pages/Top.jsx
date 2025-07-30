@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const items = [
     "財布", "スマホ", "バッグ", "充電器"
@@ -23,6 +24,7 @@ function Top() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [activeTab, setActiveTab] = useState('item'); // 'item' | 'place' | 'color'
   const wrapperRef = useRef(null);
+  const navigate = useNavigate();
 
   // --- server health‑check -------------------------------------------------
   const healthCheck = async () => {
@@ -84,8 +86,9 @@ function Top() {
     if (!res.ok) {
         throw new Error(`HTTPS error. status: ${res.status}`)
     }
-    result = res.result
+    result = res.data
     localStorage.setItem('result', result)
+    navigate('/');
     } catch (err) {
         console.log('エラーが発生しました', err)
     }
