@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const items = [
     "財布", "スマホ", "バッグ", "充電器", "イヤホン"
@@ -34,6 +35,14 @@ const NewItems = () => {
     const [confirmEmail, setConfirmEmail] = useState(() => 
       isLoggedIn ? (localStorage.getItem('email') || '') : ''
     );
+
+    const [isSuccess, setIsSuccess] = useState(false)
+
+    const [newItemId, setNewItemId] = useState('');
+    const [NewItemEmail, setNewItemEmail] = useState('');
+    const [other, setOther] = useState('');
+ 
+    const navigate = useNavigate();
      
     const toggle = (value, list, setter) =>
         list.includes(value)
@@ -64,6 +73,7 @@ const NewItems = () => {
         formData.append('color_tags', JSON.stringify(colorTags));
         formData.append('place_tags', JSON.stringify(placeTags));
         formData.append('email', email);
+        formData.append('other', other);
         
         try {
             const res = await fetch('api/new_items', {
@@ -71,14 +81,35 @@ const NewItems = () => {
                 body: formData,
             });
             if (!res.ok) throw new Error(`Servere responded with ${res.status}`);
+            const data = await res.json();
+            setNewItemId(data.item_id);
+            setNewItemEmail(data.email);
             alert('登録が完了しました')
+            setIsSuccess(true)
             setFiles([]);
         } catch (err) {
             console.log(err)
             setError('送信に失敗しました')
         }
     }
-
+    if (isSuccess) {
+      return (
+        <main className="p-4">
+          <div className="max-w-md mx-auto space-y-4">
+            <h2 className="text-xl font-bold">登録が完了しました！</h2>
+            <p>忘れ物ID: <span className="font-mono">{newItemId}</span></p>
+            <p>メールアドレス: <span className="font-mono">{NewItemEmail}</span></p>
+            <p>所有者とコンタクトを取るために必ず必要になりますので，この画面のスクリーンショットを撮ってください</p>
+            <button
+              onClick={() => navigate('/')}
+              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
+              ホームに戻る
+            </button>
+          </div>
+        </main>
+      )
+    }
     return (
         <main className="p-4">
             <div className="max-w-md mx-auto space-y-4">
@@ -187,6 +218,15 @@ const NewItems = () => {
                         className='border-2 rouded input input-bordered w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500'
                         disabled={isLoggedIn}
                     />
+                </div>
+                <div>
+                    <span className='text-sm font-medium text-gray-700'>その他備考等</span>
+                    <textarea
+                        placeholder='必要な情報を入力してください'
+                        value={other}
+                        onChange={(e) => setOther(e.target.value)}
+                        className='border-2 rounded input input-bordered w-full border-gray-300 p-2 min-h-[120px] resize-vertical'
+                        />
                 </div>
                 {error && <p className='text-red-500 text-sm'>{error}</p>}
                 <button
