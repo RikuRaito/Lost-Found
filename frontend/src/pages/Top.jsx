@@ -2,7 +2,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Top() {
-  const [tags, setTags] = useState([]);
+  const [itemTags, setItemTags] = useState([]);
+  const [colorTags, setColorTags] = useState([]);
+  const [placeTags, setPlaceTags] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [activeTab, setActiveTab] = useState('item'); // 'item' | 'place' | 'color'
   const wrapperRef = useRef(null);
@@ -10,6 +12,9 @@ function Top() {
   const [itemTagOptions, setItemTagOptions] = useState([])
   const [colorTagOptions, setColorTagOptions] = useState([])
   const [placeTagOptions, setPlaceTagOptions] = useState([])
+
+  // 選択済みタグをカテゴリ問わずまとめる
+  const combinedTags = [...itemTags, ...placeTags, ...colorTags];
 
   // --- server health‑check -------------------------------------------------
   const healthCheck = async () => {
@@ -68,15 +73,35 @@ function Top() {
       : activeTab === 'place'
       ? placeTagOptions
       : colorTagOptions // activeTab === 'color'
-    ).filter((opt) => !tags.includes(opt));
+    ).filter(opt => {
+        if (activeTab === 'item') return !itemTags.includes(opt);
+        if (activeTab === 'place') return !placeTags.includes(opt);
+        return !colorTags.includes(opt);
+    });
 
   const handleOptionClick = (option) => {
-    setTags([...tags, option]);
-    setShowDropdown(false)
-  }
+    // カテゴリごとに state を更新
+    if (activeTab === 'item') {
+      setItemTags(prev => prev.includes(option) 
+        ? prev.filter(tag => tag !== option) 
+        : [...prev, option]);
+    } else if (activeTab === 'place') {
+      setPlaceTags(prev => prev.includes(option) 
+        ? prev.filter(tag => tag !== option) 
+        : [...prev, option]);
+    } else { // 'color'
+      setColorTags(prev => prev.includes(option) 
+        ? prev.filter(tag => tag !== option) 
+        : [...prev, option]);
+    }
+    setShowDropdown(false);
+  };
 
-  const removeTag = (idxToRemove) => {
-    setTags(tags.filter((_, idx) => idx !== idxToRemove));
+  // カテゴリ問わずタグを削除
+  const removeTag = (tagToRemove) => {
+    setItemTags(prev => prev.filter(t => t !== tagToRemove));
+    setPlaceTags(prev => prev.filter(t => t !== tagToRemove));
+    setColorTags(prev => prev.filter(t => t !== tagToRemove));
   };
 
   const handleSearch = async() => {
@@ -87,7 +112,9 @@ function Top() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            'tags': tags
+            'item_tags': itemTags,
+            'color_tags': colorTags,
+            'place_tags': placeTags
         })
     })
     if (!res.ok) {
@@ -116,7 +143,7 @@ function Top() {
           </label>
 
           <div className="flex flex-wrap gap-2 mb-2">
-            {tags.map((tag, idx) => (
+            {combinedTags.map((tag, idx) => (
               <span
                 key={idx}
                 className="flex items-center bg-blue-100 text-blue-800 text-sm px-2 py-1 rounded-xl"
@@ -124,7 +151,7 @@ function Top() {
                 {tag}
                 <button
                   className="ml-1 text-blue-500 hover:text-blue-700"
-                  onClick={() => removeTag(idx)}
+                  onClick={() => removeTag(tag)}
                 >
                   &times;
                 </button>

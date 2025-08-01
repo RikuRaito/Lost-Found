@@ -33,6 +33,16 @@ def read_items_data(data_file):
             return json.load(f)
         except json.JSONDecodeError:
             return []
+        
+def read_admin_data(data_file):
+    if not os.path.exists(data_file):
+        return {}
+    with open(data_file, 'r', encoding='utf-8') as f:
+        try:
+            return json.load(f)
+        except json.JSONDecodeError:
+            return {}
+        
 
 def write_items_data(data_file, itemsData, record):
     # 新しい落とし物レコードを追加してファイルに書き込む
@@ -167,6 +177,24 @@ def new_items():
         'email': email,
         'item_id': item_id
     }), 201
+
+@app.route('/api/admin_login', methods=["POST"])
+def admin_login():
+    data = request.get_json()
+    id = data.get('id', '')
+    password = data.get('pwd', '')
+    admin_data = read_admin_data("admin.json")
+    expected_id = admin_data.get('id', '')
+    expected_pwd = admin_data.get('password', '')
+    if id == expected_id and password == expected_pwd:
+        return jsonify ({
+            'status': 'Success',
+        }), 200
+    else:
+        return jsonify({
+            "status":'Failed',
+            "message": "Invalid access"
+        }), 401
 
 
 if __name__ == "__main__":

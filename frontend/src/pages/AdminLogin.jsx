@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AdminLogin = () => {
-    const [email, setEmail] = useState('')
+    const [id, setId] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate();
 
@@ -15,14 +15,15 @@ const AdminLogin = () => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify ({
-                    'email': email,
+                    'id': id,
                     'pwd': password 
                 })
             })
             if (!res.ok) {
                 throw new Error(`HTTP erro. status: ${res.status}`)
             }
-            localStorage.setItem('email', email)
+            console.log('ログイン成功')
+            localStorage.setItem('id', id)
             //navigate('/AdminDashboard')
         } catch(err) {
              console.log('エラーが発生しました', err)
@@ -41,10 +42,10 @@ const AdminLogin = () => {
                 <label className="block space-y-2">
                     <span className="text-sm font-medium text-gray-700">メールアドレス</span>
                     <input
-                        type="email"
+                        type="id"
                         placeholder="メールアドレス"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        value={id}
+                        onChange={(e) => setId(e.target.value)}
                         className="border-2 rounded input input-bordered w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                     />
                 </label>
