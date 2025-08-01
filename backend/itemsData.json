@@ -1,0 +1,50 @@
+[
+    {
+        "item_id": "5665f53137c24f7cbdbdce42f20c58ff",
+        "email": "uuu@gmail.com",
+        "tags": {
+            "items": [
+                "財布"
+            ],
+            "color": [
+                "青"
+            ],
+            "place": [
+                "千代田区"
+            ]
+        },
+        "images": [
+            "5665f53137c24f7cbdbdce42f20c58ff/4b374f22e1984d84afd19c52a9115d09_hero_background.png",
+            "5665f53137c24f7cbdbdce42f20c58ff/83f3fe4c10dc43b1996e259e241a445d_Gemini_Generated_Image_f51n6gf51n6gf51n.png"
+        ],
+        "other": "ffff",
+        "found_date": "2025-07-27",
+        "found_period": "AM",
+        "found_time": "11:01"
+    },
+    {
+        "item_id": "9c3d01cc1dcb448b862db00c39adffc0",
+        "email": "rrr@gmail.com",
+        "tags": {
+            "items": [
+                "財布"
+            ],
+            "color": [
+                "黒"
+            ],
+            "place": [
+                "千代田区"
+            ]
+        },
+        "images": [
+            "9c3d01cc1dcb448b862db00c39adffc0/07a828f92e25466c9d4ddfbe61ef5272_pineapple_20K_1.png",
+            "9c3d01cc1dcb448b862db00c39adffc0/e541ac4023534ccea2275a50e3e103e0_lm_blueberry.jpg",
+            "9c3d01cc1dcb448b862db00c39adffc0/73d3405b109a4c2da8a7fe369ad92954_prot3.png",
+            "9c3d01cc1dcb448b862db00c39adffc0/4efd1b3550484d37a7186f8a0706b1c0_prot2.png"
+        ],
+        "other": "ffffdsfs",
+        "found_date": "2025-07-27",
+        "found_period": "PM",
+        "found_time": "11:01"
+    }
+]

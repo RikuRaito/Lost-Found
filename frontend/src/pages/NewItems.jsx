@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import heic2any from "heic2any";
 
 const items = [
     "財布", "スマホ", "バッグ", "充電器", "イヤホン"
@@ -43,23 +44,49 @@ const NewItems = () => {
     const [other, setOther] = useState('');
  
     const navigate = useNavigate();
+    const [foundDate, setFoundDate] = useState('') //YYYY-MM-DD
+    const [foundPeriod, setFoundPeriod] = useState('AM')
+    const [foundTime, setFoundTime] = useState('') //HH
      
     const toggle = (value, list, setter) =>
         list.includes(value)
             ? setter(list.filter((v) => v !== value))
             : setter([...list, value])
 
-    const handleFileChange = (e) => {
-        const selected = Array.from(e.target.files);
-
-        if (selected.length > 5) {
-            setError('アップロードできる写真は最大５枚です');
-            return;
+    const handleFileChange = async (e) => {
+      const selected = Array.from(e.target.files);
+      const processed = [];
+      for (const file of selected) {
+        if (file.type === "image/heic" || file.name.match(/\.heic$/i)) {
+          try {
+            const blob = await heic2any({ blob: file, toType: "image/jpeg" });
+            const jpegFile = new File(
+              [blob],
+              file.name.replace(/\.heic$/i, ".jpg"),
+              { type: "image/jpeg" }
+            );
+            processed.push(jpegFile);
+          } catch (err) {
+            console.error("HEIC変換エラー:", err);
+          }
+        } else {
+          processed.push(file);
         }
-        setFiles(selected);
-        setError('')
-    }
+      }
+      // 既存の files と結合
+      const newFiles = [...files, ...processed];
+      if (newFiles.length > 5) {
+        setError('アップロードできる写真は最大５枚です');
+        return;
+      }
+      setFiles(newFiles);
+      setError('');
+    };
 
+    // 選択画像を削除する関数
+    const removeImage = (index) => {
+      setFiles(files.filter((_, i) => i !== index));
+    };
 
     const handleSubmit = async() => {
         if (files.length === 0) {
@@ -74,6 +101,9 @@ const NewItems = () => {
         formData.append('place_tags', JSON.stringify(placeTags));
         formData.append('email', email);
         formData.append('other', other);
+        formData.append('found_date', foundDate)
+        formData.append('found_period', foundPeriod)
+        formData.append('found_time', foundTime)
         
         try {
             const res = await fetch('api/new_items', {
@@ -129,14 +159,22 @@ const NewItems = () => {
                 </label>
                 {files.length > 0 && (
                     <div className='flex flex-wrap gap-2'>
-                        {files.map((f, idx) => (
-                            <img
-                                key={idx}
-                                src={URL.createObjectURL(f)}
-                                alt={`preview-${idx}`}
-                                className='w-24 h-24 object-cover rounded border'
-                            />
-                        ))}
+                      {files.map((f, idx) => (
+                        <div key={idx} className='relative w-24 h-24'>
+                          <img
+                            src={URL.createObjectURL(f)}
+                            alt={`preview-${idx}`}
+                            className='w-full h-full object-cover rounded border'
+                          />
+                          <button
+                            type='button'
+                            onClick={() => removeImage(idx)}
+                            className='absolute top-0 right-0 bg-white rounded-full w-6 h-6 flex items-center justify-center p-1 text-blue-500 shadow'
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      ))}
                     </div>
                 )}
                 <div>
@@ -197,6 +235,31 @@ const NewItems = () => {
                             ))}
                         </div>
                     </span>
+                </div>
+                <div>
+                    <span className='text-gray-700'>発見日時</span>
+                    <div className='flex items-center gap-2 mt-2'>
+                        <input
+                            type='date'
+                            value={foundDate}
+                            onChange={(e) => setFoundDate(e.target.value)}
+                            className='border rounded p-1'
+                        />
+                        <select
+                            value={foundPeriod}
+                            onChange={(e) => setFoundPeriod(e.target.value)}
+                            className='border rounded p-1'
+                        >
+                            <option value='AM'>午前</option>
+                            <option value='PM'>午後</option>
+                        </select>
+                        <input
+                            type='time'
+                            value={foundTime}
+                            onChange={(e) => setFoundTime(e.target.value)}
+                            className='border rounded p-1'
+                        />
+                    </div>
                 </div>
                 <div>
                     <span className='text-sm font-medium text-gray-700'>メールアドレス</span>
