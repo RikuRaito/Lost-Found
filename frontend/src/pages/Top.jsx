@@ -1,30 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const items = [
-    "財布", "スマホ", "バッグ", "充電器", "イヤホン"
-];
-
-const colors = [
-    "茶色", "赤", "青", "オレンジ", "黄色", "黒"
-]
-
-const places = {
-    "東京都": [
-        "全域", "千代田区", "中央区", "港区", "新宿区", "文京区", "台東区", "墨田区", "江東区", "品川区",
-        "目黒区", "大田区", "世田谷区", "渋谷区", "中野区", "杉並区", "豊島区", "北区", "荒川区", "板橋区",
-        "練馬区", "足立区", "葛飾区", "江戸川区"
-    ]
-};
-
-const allPlaces = Object.values(places).flat();
-
 function Top() {
   const [tags, setTags] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [activeTab, setActiveTab] = useState('item'); // 'item' | 'place' | 'color'
   const wrapperRef = useRef(null);
   const navigate = useNavigate();
+  const [itemTagOptions, setItemTagOptions] = useState([])
+  const [colorTagOptions, setColorTagOptions] = useState([])
+  const [placeTagOptions, setPlaceTagOptions] = useState([])
 
   // --- server health‑check -------------------------------------------------
   const healthCheck = async () => {
@@ -55,12 +40,34 @@ function Top() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    const getTags = async() => {
+      try {
+        const res = await fetch('/api/get_tags',{
+          method: 'GET',
+          headers: {'Accept': 'application/json'}
+        });
+        if (!res.ok) {
+          throw new Error(`Server responded with ${res.message}`)
+        }
+        const data = await res.json();
+        setItemTagOptions(data.item_tags)
+        setColorTagOptions(data.color_tags)
+        const flattenedPlaces = Object.values(data.place_tags).flat();
+        setPlaceTagOptions(flattenedPlaces)
+      } catch(err) {
+        console.log('タグ取得の際にエラーが発生しました')
+      }
+    };
+    getTags();
+  }, [])
+
   const availableOptions =
     (activeTab === 'item'
-      ? items
+      ? itemTagOptions
       : activeTab === 'place'
-      ? allPlaces
-      : colors // activeTab === 'color'
+      ? placeTagOptions
+      : colorTagOptions // activeTab === 'color'
     ).filter((opt) => !tags.includes(opt));
 
   const handleOptionClick = (option) => {
