@@ -239,6 +239,21 @@ function Top() {
           >
           検索
         </button>
+                {/* プラットフォーム使い方セクション */}
+        <div className="mt-12 flex flex-wrap justify-center gap-6 px-4">
+          <div className="flex-1 max-w-xs p-6 bg-white border rounded-lg shadow">
+            <h3 className="text-lg font-semibold mb-2">1. 落とし物の検索方法</h3>
+            <p className="text-sm text-gray-600">上の検索欄からタグを選択して「検索」ボタンを押してください。</p>
+          </div>
+          <div className="flex-1 max-w-xs p-6 bg-white border rounded-lg shadow">
+            <h3 className="text-lg font-semibold mb-2">2. 落とし物登録方法</h3>
+            <p className="text-sm text-gray-600">画面右上の「落とし物登録」ボタンから登録フォームにアクセスできます。</p>
+          </div>
+          <div className="flex-1 max-w-xs p-6 bg-white border rounded-lg shadow">
+            <h3 className="text-lg font-semibold mb-2">3. 回収者へのコンタクト</h3>
+            <p className="text-sm text-gray-600">検索結果一覧から詳細ページに移動してマッチングボタンを押してください。その際に発行されるマッチングIDを使ってコンタクトが可能です。</p>
+          </div>
+        </div>
       </div>
     </main>
   );
