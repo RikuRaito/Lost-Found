@@ -6,6 +6,7 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import NewItems from './pages/NewItems'
 import Notification from './pages/Notification'
+import AdminLogin from './pages/AdminLogin'
 import AnimatedLinesCircle from './components/Animation'
 
 function App() {
@@ -14,7 +15,10 @@ function App() {
 
   return (
     <>
-      <Header isLoggedIn={isLoggedIn} />
+      {location.pathname !== '/AdminLogin' && (
+        <Header isLoggedIn={isLoggedIn} />
+      )}
+      
       {location.pathname === '/' && (
         <div className='relative'>
           <AnimatedLinesCircle />
@@ -22,8 +26,9 @@ function App() {
       )}
       <main>
         <Routes>
-          <Route path='Notification' element={<Notification />} />
-          <Route path='New_items' element={<NewItems />} />
+          <Route path='/AdminLogin' element={<AdminLogin />} />
+          <Route path='/Notification' element={<Notification />} />
+          <Route path='/New_items' element={<NewItems />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/Signup" element={<Signup />} />
           <Route path="*" element={<Top /> } />
