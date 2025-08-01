@@ -167,7 +167,8 @@ def new_items():
         "other": other,
         "found_date": found_date,
         "found_period": found_period,
-        "found_time": found_time
+        "found_time": found_time,
+        "status": 'found'
     }
 
     write_items_data("itemsData.json", read_items_data("itemsData.json"), record)
