@@ -1,24 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import heic2any from "heic2any";
 
-const items = [
-    "財布", "スマホ", "バッグ", "充電器", "イヤホン"
-];
-
-const colors = [
-    "茶色", "赤", "青", "オレンジ", "黄色", "黒"
-]
-
-const places = {
-    "東京都": [
-        "東京都全域", "千代田区", "中央区", "港区", "新宿区", "文京区", "台東区", "墨田区", "江東区", "品川区",
-        "目黒区", "大田区", "世田谷区", "渋谷区", "中野区", "杉並区", "豊島区", "北区", "荒川区", "板橋区",
-        "練馬区", "足立区", "葛飾区", "江戸川区"
-    ]
-};
-
-const allPlaces = Object.values(places).flat();
 
 const NewItems = () => {
     const [files, setFiles] = useState([]);
@@ -42,6 +25,9 @@ const NewItems = () => {
     const [newItemId, setNewItemId] = useState('');
     const [NewItemEmail, setNewItemEmail] = useState('');
     const [other, setOther] = useState('');
+    const [itemTagOptions, setItemTagOptions] = useState([])
+    const [colorTagOptions, setColorTagOptions] = useState([])
+    const [placeTagOptions, setPlaceTagOptions] = useState([])
  
     const navigate = useNavigate();
     const [foundDate, setFoundDate] = useState('') //YYYY-MM-DD
@@ -82,6 +68,28 @@ const NewItems = () => {
       setFiles(newFiles);
       setError('');
     };
+
+    useEffect(() => {
+        const getTags = async() => {
+          try {
+            const res = await fetch('/api/get_tags',{
+              method: 'GET',
+              headers: {'Accept': 'application/json'}
+            });
+            if (!res.ok) {
+              throw new Error(`Server responded with ${res.message}`)
+            }
+            const data = await res.json();
+            setItemTagOptions(data.item_tags)
+            setColorTagOptions(data.color_tags)
+            const flattenedPlaces = Object.values(data.place_tags).flat();
+            setPlaceTagOptions(flattenedPlaces)
+          } catch(err) {
+            console.log('タグ取得の際にエラーが発生しました')
+          }
+        };
+        getTags();
+      }, [])
 
     // 選択画像を削除する関数
     const removeImage = (index) => {
@@ -180,7 +188,7 @@ const NewItems = () => {
                 <div>
                     <span className='text-gray-700'>落とし物タグ</span>
                         <div className='flex flex-wrap gap-2 mt-2'>
-                            {items.map((it) => (
+                            {itemTagOptions.map((it) => (
                                 <button
                                     key={it}
                                     type='button'
@@ -199,7 +207,7 @@ const NewItems = () => {
                 <div>
                     <span className='text-gray-700'>色タグ
                         <div className='flex flex-wrap gap-2 mt-2'>
-                            {colors.map((it) => (
+                            {colorTagOptions.map((it) => (
                                 <button
                                     key={it}
                                     type='button'
@@ -219,7 +227,7 @@ const NewItems = () => {
                 <div>
                     <span className='text-gray-700'>発見場所タグ
                         <div className='flex flex-wrap gap-2 mt-2'>
-                            {allPlaces.map((it) => (
+                            {placeTagOptions.map((it) => (
                                 <button
                                     key={it}
                                     type='button'

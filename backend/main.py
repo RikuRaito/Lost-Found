@@ -87,6 +87,24 @@ def login():
         return jsonify({"status":"NOTFOUND"}), 201
     else: return jsonify({"status":"ERROR"}), 400
 
+#タグの取得用エンドポイント
+@app.route("/api/get_tags", methods=["GET"])
+def get_tags():
+    
+    with open(os.path.join('tags', 'items.json'), 'r', encoding='utf-8') as f:
+        item_tags = json.load(f)
+    with open(os.path.join('tags', 'colors.json'), 'r', encoding='utf-8') as f:
+        color_tags = json.load(f)
+    with open(os.path.join('tags', 'places.json'), 'r', encoding='utf-8') as f:
+        place_tags = json.load(f)
+    
+    return jsonify ({
+        'item_tags': item_tags,
+        'color_tags': color_tags,
+        'place_tags': place_tags
+    }), 200
+
+
 #忘れもの登録機能
 @app.route('/api/new_items', methods=["POST"])
 def new_items():
