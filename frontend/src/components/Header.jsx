@@ -1,6 +1,35 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 const Header = ({isLoggedIn}) => {
+    const { i18n } = useTranslation();
+    const [langDropdown, setlangDropdown] = useState(false)
+    const current = i18n.language || 'ja'
+    const { t } = useTranslation();
+
+    const wrapperRef = useRef(null);
+
+    useEffect(() => {
+      function handleClickOutside(event) {
+        if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+          setlangDropdown(false);
+        }
+      }
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
+    // Header.jsx 内
+    const switchLanguage = (lng) => {
+        i18n.changeLanguage(lng).then(() => {
+            console.log('language changed to', i18n.language);
+        }).catch((e) => {
+            console.error('changeLanguage failed', e);
+        });
+        localStorage.setItem('lng', lng);
+        setlangDropdown(false);
+    };
+
     return (
         <header className="relative m-4 z-20 flex items-center justify-between bg-transparent shadow px-1 pr-6 py-2">
             <a href="/" className="flex items-center h-10 bg-center bg-cover bg-white p-1 rounded-xl"> 
@@ -17,7 +46,7 @@ const Header = ({isLoggedIn}) => {
                 shadow-md transition-colors duration-150
                 "
                 >
-                    落とし物登録
+                    {t('buttons.register')}
                 </a>
                 <a href="/Notification" className="flex items-center bg-white p-1 rounded-3xl">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-9">
@@ -36,6 +65,31 @@ const Header = ({isLoggedIn}) => {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                     </svg>
                 </a>
+                <div ref={wrapperRef} className="relative">
+                  <button
+                    className="px-2 py-1 border rounded"
+                    onClick={() => setlangDropdown((v) => !v)}
+                  >
+                    {current === 'ja' ? '日本語' : 'English'}
+                  </button>
+                  {langDropdown && (
+                    <div className="absolute right-0 mt-2 w-32 bg-white border rounded shadow-lg z-30">
+                      <button
+                        className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+                        onClick={() => switchLanguage('ja')}
+                      >
+                        日本語
+                      </button>
+                      <button
+                        className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+                        onClick={() => switchLanguage('en')}
+                      >
+                        English
+                      </button>
+                    </div>
+                  )}
+                </div>
+            
             </div>
         </header>
     )

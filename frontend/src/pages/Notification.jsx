@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Notification = () => {
     const [itemId, setItemId] = useState('')
     const navigate = useNavigate();
-
+    const { t } = useTranslation();
     const [isLoggedIn, setIsLoggedIn] = useState(
         () => localStorage.getItem('isLoggedIn') === 'true'
     )
@@ -69,20 +70,20 @@ const Notification = () => {
                     onSubmit={verifyAndFetchItem}
                 >
                     <h1 className="text-2xl font-bold text-center mb-8">
-                        Lost<span className="text-blue-600">Found</span>落とし物アクセス
+                        Lost<span className="text-blue-600">Found</span>{t('access.access')}
                     </h1>
                     <label className="block space-y-2">
-                        <span className="text-sm font-medium text-gray-700">落とし物ID</span>
+                        <span className="text-sm font-medium text-gray-700">{t('access.id')}</span>
                         <input
-                            placeholder="落とし物ID"
+                            placeholder={t('access.id')}
                             value={itemId}
                             onChange={(e) => setItemId(e.target.value)}
                             className="border-2 rounded input input-bordered w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                         />
-                        <span className="text-sm font-medium text-gray-700">メールアドレス</span>
+                        <span className="text-sm font-medium text-gray-700">{t('access.email')}</span>
                         <input
                             type="email"
-                            placeholder="メールアドレス"
+                            placeholder={t('acess.email')}
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             className="border-2 rounded input input-bordered w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500"
@@ -92,7 +93,7 @@ const Notification = () => {
                     <button
                         type="submit"
                         className="w-full py-2 rounded-md bg-blue-500 hover:bg-blue-700 text-white font-semibold shadow-sm transition-colors"
-                    >アクセス
+                    >{t('access.submit')}
                     </button>
                 </form>
             </main>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function Top() {
   const [itemTags, setItemTags] = useState([]);
@@ -9,12 +10,19 @@ function Top() {
   const [activeTab, setActiveTab] = useState('item'); // 'item' | 'place' | 'color'
   const wrapperRef = useRef(null);
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [itemTagOptions, setItemTagOptions] = useState([])
   const [colorTagOptions, setColorTagOptions] = useState([])
   const [placeTagOptions, setPlaceTagOptions] = useState([])
 
   // 選択済みタグをカテゴリ問わずまとめる
   const combinedTags = [...itemTags, ...placeTags, ...colorTags];
+
+  // タグのnamespaceを判定
+  const getNamespaceForTag = (tag) =>
+    itemTags.includes(tag) ? 'items' :
+    placeTags.includes(tag) ? 'places' :
+    'color';
 
   // --- server health‑check -------------------------------------------------
   const healthCheck = async () => {
@@ -120,8 +128,8 @@ function Top() {
     if (!res.ok) {
         throw new Error(`HTTPS error. status: ${res.status}`)
     }
-    result = res.data
-    localStorage.setItem('result', result)
+    const result = await res.json()
+    localStorage.setItem('result', JSON.stringify(result))
     navigate('/');
     } catch (err) {
         console.log('エラーが発生しました', err)
@@ -148,7 +156,7 @@ function Top() {
                 key={idx}
                 className="flex items-center bg-blue-100 text-blue-800 text-sm px-2 py-1 rounded-xl"
               >
-                {tag}
+                {t(`tag_values.${getNamespaceForTag(tag)}.${tag}`, tag)}
                 <button
                   className="ml-1 text-blue-500 hover:text-blue-700"
                   onClick={() => removeTag(tag)}
@@ -166,9 +174,9 @@ function Top() {
               onClick={() => setShowDropdown(true)}
               >
                   {availableOptions.length === 0 ? (
-                      <span className='text-black font-bold'>追加できるタグはありません</span>
+                      <span className='text-black font-bold'>{t('no_options')}</span>
                   ) : (
-                      <span className='text-black font-bold'>タグを選択...</span>
+                      <span className='text-black font-bold'>{t('search_placeholder')}</span>
                   )}
               </div>
               {showDropdown && (
@@ -183,7 +191,7 @@ function Top() {
                       }`}
                       onClick={() => setActiveTab('item')}
                     >
-                      落とし物
+                      {t('tab.item')}
                     </button>
                     <button
                       className={`flex-1 py-2 text-sm ${
@@ -193,7 +201,7 @@ function Top() {
                       }`}
                       onClick={() => setActiveTab('place')}
                     >
-                      落とした場所
+                      {t('tab.place')}
                     </button>
                     <button
                       className={`flex-1 py-2 text-sm ${
@@ -203,22 +211,29 @@ function Top() {
                       }`}
                       onClick={() => setActiveTab('color')}
                       >
-                          色
+                          {t('tab.color')}
                       </button>
                   </div>
 
                   {/* --- options list -------------------------------------------------- */}
                   {availableOptions.length > 0 ? (
                     <ul className='max-h-48 overflow-auto'>
-                      {availableOptions.map((option) => (
-                        <li
-                          key={option}
-                          className='px-4 py-2 hover:bg-blue-50 cursor-pointer'
-                          onClick={() => handleOptionClick(option)}
-                        >
-                          {option}
-                        </li>
-                      ))}
+                      {availableOptions.map((option) => {
+                        const ns = activeTab === 'item'
+                          ? 'items'
+                          : activeTab === 'place'
+                          ? 'places'
+                          : 'color';
+                        return (
+                          <li
+                            key={option}
+                            className='px-4 py-2 hover:bg-blue-50 cursor-pointer'
+                            onClick={() => handleOptionClick(option)}
+                          >
+                            {t(`tag_values.${ns}.${option}`, option)}
+                          </li>
+                        );
+                      })}
                     </ul>
                   ) : (
                     <div className='px-4 py-2 text-sm text-gray-400'>追加できる候補がありません</div>
@@ -237,21 +252,21 @@ function Top() {
           "
           onClick={handleSearch}
           >
-          検索
+          {t('buttons.search')}
         </button>
                 {/* プラットフォーム使い方セクション */}
         <div className="mt-12 flex flex-wrap justify-center gap-6 px-4">
           <div className="flex-1 max-w-xs p-6 bg-white border rounded-lg shadow">
-            <h3 className="text-lg font-semibold mb-2">1. 落とし物の検索方法</h3>
-            <p className="text-sm text-gray-600">上の検索欄からタグを選択して「検索」ボタンを押してください。</p>
+            <h3 className="text-lg font-semibold mb-2">{t('how_to.step1.title')}</h3>
+            <p className="text-sm text-gray-600">{t('how_to.step1.desc')}</p>
           </div>
           <div className="flex-1 max-w-xs p-6 bg-white border rounded-lg shadow">
-            <h3 className="text-lg font-semibold mb-2">2. 落とし物登録方法</h3>
-            <p className="text-sm text-gray-600">画面右上の「落とし物登録」ボタンから登録フォームにアクセスできます。</p>
+            <h3 className="text-lg font-semibold mb-2">{t('how_to.step2.title')}</h3>
+            <p className="text-sm text-gray-600">{t('how_to.step2.desc')}</p>
           </div>
           <div className="flex-1 max-w-xs p-6 bg-white border rounded-lg shadow">
-            <h3 className="text-lg font-semibold mb-2">3. 回収者へのコンタクト</h3>
-            <p className="text-sm text-gray-600">検索結果一覧から詳細ページに移動してマッチングボタンを押してください。その際に発行されるマッチングIDを使ってコンタクトが可能です。</p>
+            <h3 className="text-lg font-semibold mb-2">{t('how_to.step3.title')}</h3>
+            <p className="text-sm text-gray-600">{t('how_to.step3.desc')}</p>
           </div>
         </div>
       </div>
