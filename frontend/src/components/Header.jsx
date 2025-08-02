@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 const Header = ({isLoggedIn}) => {
     const { i18n } = useTranslation();
     const [langDropdown, setlangDropdown] = useState(false)
     const current = i18n.language || 'ja'
     const { t } = useTranslation();
-
+    const navigate = useNavigate();
     const wrapperRef = useRef(null);
 
     useEffect(() => {
@@ -40,6 +41,16 @@ const Header = ({isLoggedIn}) => {
                 />
             </a>
             <div className="flex items-center gap-4">
+                <button
+                  className="
+                    flex items-center px-6 py-2 w-fit rounded-md bg-red-500 text-white font-semibold
+                  hover:bg-red-600 active:bg-red-700 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed
+                    shadow-md transition-colors duration-150
+                  "
+                  onClick={() => navigate('/contact')}
+                >
+                  {t('buttons.contact')}
+                </button>
                 <a href="/New_items" className="
                 flex items-center px-6 py-2 w-fit rounded-md bg-blue-500 text-white font-semibold
                 hover:bg-blue-600 active:bg-blue-700 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed

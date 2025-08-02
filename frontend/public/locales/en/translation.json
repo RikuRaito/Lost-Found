@@ -8,7 +8,8 @@
   },
   "buttons": {
     "search": "Search",
-    "register": "Register item"
+    "register": "Register item",
+    "contact": "Contact Us"
   },
   "login": {
     "login": "Login",
@@ -101,5 +102,14 @@
         "黄色": "Yellow",
         "黒": "Black"
         }
-    }
+    },
+    "contact": {
+    "name": "Contact Us",
+    "placeHold": "Please describe your inquiry in detail",
+    "email": "Email",
+    "emailCom": "Comfirm email",
+    "submit": "Submit",
+    "completeTitle": "Inquiry Submitted",
+    "completeMessage": "Inquiry ID: {{id}}、Registerred Email: {{email}}. Please take a screenshot of this page"
+ }
 }
