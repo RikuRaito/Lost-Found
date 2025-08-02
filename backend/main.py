@@ -179,6 +179,7 @@ def new_items():
         'item_id': item_id
     }), 201
 
+#管理者用画面ログイン
 @app.route('/api/admin_login', methods=["POST"])
 def admin_login():
     data = request.get_json()
@@ -196,6 +197,41 @@ def admin_login():
             "status":'Failed',
             "message": "Invalid access"
         }), 401
+    
+#落とし物検索機能
+@app.route('/api/search_items', methods=['POST'])
+def search_items():
+    if request.is_json():
+        data = request.json
+        search_item = data.get('item_tags')
+        search_color = data.get('color_tags')
+        search_place = data.get('place_tags')
+        itemsData = read_items_data('itemsData.json')
+        res = [] #タグ一致数管理配列
+        for iD in itemsData:
+            item_id = iD.get('item_id')
+            res[item_id] = 0
+            iD_tags = iD.get('tags')
+            iD_item = iD_tags.get('item')
+            iD_color = iD_tags.get('color')
+            iD_place = iD_tags.get('place')
+            #itemタグの一致数を取得．重みを付けて記録
+            for si in search_item:
+                for i in iD_item:
+                    if si == i: res[item_id] += 10000
+            #colorタグの一致数を取得．重みをつけて記録
+            for sc in search_color:
+                for c in iD_color:
+                    if sc == c: res[item_id] += 100
+            #placeタグの一致数を取得．重みを付けて記録
+            for sp in search_place:
+                for p in iD_place:
+                    if sp == p: res[item_id] += 1
+        #重みで降順にソート
+        sorted_res = sorted(res.items(), key=lambda x:x[1], reverse=True)
+        return jsonify(sorted_res),201
+
+    else :return jsonify({'status':'ERROR'}),400
 
 
 if __name__ == "__main__":
