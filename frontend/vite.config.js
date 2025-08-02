@@ -27,6 +27,11 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:5002',
         changeOrigin: true
+      },
+
+      '/item_images': {
+        target: 'http://localhost:5002',
+        changeOrigin: true
       }
     }
   },
