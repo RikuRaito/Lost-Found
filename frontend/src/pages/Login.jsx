@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ const Login = () => {
   );
 
   const [password, setPassword] = useState('')
+  const { t } = useTranslation();
 
   // 2) isLoggedIn が変わるたびに localStorage を更新
   useEffect(() => {
@@ -90,14 +92,14 @@ useEffect(() => {
       <main className="flex items-center justify-center bg-gray-50 px-4 h-[calc(100vh-4rem)] overflow-hidden">
         <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg text-center space-y-6">
           <h1 className="text-2xl font-bold">
-            ようこそ <span className="text-blue-600">LostFound</span> へ
+            {t('login.welcome')} <span className="text-blue-600">LostFound</span> {t('login.welcome2')}
           </h1>
-          <p className="text-gray-700">既にログインしています。</p>
+          <p className="text-gray-700">{t('login.alreadyLoggedIn')}</p>
           <button
             onClick={handleLogout}
             className="w-full py-2 rounded-md bg-blue-500 hover:bg-blue-700 text-white font-semibold shadow-sm transition-colors"
           >
-            ログアウト
+            {t('login.logout')}
           </button>
         </div>
       </main>
@@ -112,14 +114,14 @@ useEffect(() => {
         onSubmit={handleSubmit}
       >
         <h1 className="text-2xl font-bold text-center mb-8">
-          Lost<span className="text-blue-600">Found</span> ログイン
+          Lost<span className="text-blue-600">Found</span> {t('login.login')}
         </h1>
 
         <label className="block space-y-2">
-          <span className="text-sm font-medium text-gray-700">メールアドレス</span>
+          <span className="text-sm font-medium text-gray-700">{t('login.email')}</span>
           <input
             type="email"
-            placeholder="メールアドレス"
+            placeholder={t('login.email')}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="border-2 rounded input input-bordered w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500"
@@ -127,10 +129,10 @@ useEffect(() => {
         </label>
 
         <label className="block space-y-2">
-          <span className="text-sm font-medium text-gray-700">パスワード</span>
+          <span className="text-sm font-medium text-gray-700">{t('login.pwd')}</span>
           <input
             type="password"
-            placeholder="パスワード"
+            placeholder={t('login.pwd')}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="border-2 rounded input input-bordered w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500"
@@ -141,13 +143,13 @@ useEffect(() => {
           type="submit"
           className="w-full py-2 rounded-md bg-blue-500 hover:bg-blue-700 text-white font-semibold shadow-sm transition-colors"
         >
-          ログイン
+          {t('login.login')}
         </button>
 
         <p className="text-center text-sm text-gray-600">
-          アカウントをお持ちでない方は
+          {t('login.doesntHave')}
           <a href="/signup" className="text-blue-500 hover:underline ml-1">
-            新規登録はこちら
+            {t('login.signupHere')}
           </a>
         </p>
       </form>

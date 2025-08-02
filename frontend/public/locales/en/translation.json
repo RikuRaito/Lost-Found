@@ -1,0 +1,105 @@
+{
+  "search_placeholder": "Select tags...",
+  "no_options": "No available options",
+  "tab": {
+    "item": "Item",
+    "place": "Place",
+    "color": "Color"
+  },
+  "buttons": {
+    "search": "Search",
+    "register": "Register item"
+  },
+  "login": {
+    "login": "Login",
+    "alreadyLoggedIn": "Already logged in",
+    "welcome": "Welcome",
+    "welcome2": "to",
+    "email": "Email",
+    "pwd": "Password",
+    "doesntHave": "Don't have an account?",
+    "signupHere": "Sign up here",
+    "logout": "Logout"
+  },
+  "newItems": {
+    "desc": "Lost item registration",
+    "images": "Photos (up to 5)",
+    "notSelected": "Not selected",
+    "itemTags": "Item tags",
+    "colorTags": "Color tags",
+    "placeTags": "Place tags",
+    "date": "Date found",
+    "AM": "AM",
+    "PM": "PM",
+    "email": "Email",
+    "emailCom": "Confirm email",
+    "emailInput": "Enter your email",
+    "emailDisc": "This email will be used to contact the item's owner",
+    "other": "Other notes",
+    "otherPlaceHold": "Enter any necessary information",
+    "submit": "Submit"
+  },
+  "access": {
+    "access": "Lost item access",
+    "id": "Lost Item ID",
+    "email": "Email",
+    "submit": "Access"
+  },
+  "how_to": {
+        "step1": {
+        "title": "1. How to search for lost items",
+        "desc": "Select tags from the search bar above and click the 'Search' button."
+        },
+        "step2": {
+        "title": "2. How to register a lost item",
+        "desc": "Click the 'Register Item' button in the top right to access the registration form."
+        },
+        "step3": {
+        "title": "3. How to contact the finder",
+        "desc": "From the search results, go to the detail page and click the matching button. Use the issued matching ID to contact them."
+        }
+    },
+    "tag_values": {
+        "items": {
+        "財布": "Wallet",
+        "スマホ": "Smartphone",
+        "バッグ": "Bag",
+        "充電器": "Charger",
+        "イヤホン": "Earphones"
+        },
+        "places": {
+        "全域": "All areas in Tokyo",
+        "千代田区": "Chiyoda Ward",
+        "中央区": "Chuo Ward",
+        "港区": "Minato Ward",
+        "新宿区": "Shinjuku Ward",
+        "文京区": "Bunkyo Ward",
+        "台東区": "Taito Ward",
+        "墨田区": "Sumida Ward",
+        "江東区": "Koto Ward",
+        "品川区": "Shinagawa Ward",
+        "目黒区": "Meguro Ward",
+        "大田区": "Ota Ward",
+        "世田谷区": "Setagaya Ward",
+        "渋谷区": "Shibuya Ward",
+        "中野区": "Nakano Ward",
+        "杉並区": "Suginami Ward",
+        "豊島区": "Toshima Ward",
+        "北区": "Kita Ward",
+        "荒川区": "Arakawa Ward",
+        "板橋区": "Itabashi Ward",
+        "練馬区": "Nerima Ward",
+        "足立区": "Adachi Ward",
+        "葛飾区": "Katsushika Ward",
+        "江戸川区": "Edogawa Ward"
+        },
+        "color": {
+        "茶色": "Brown",
+        "赤": "Red",
+        "青": "Blue",
+        "オレンジ": "Orange",
+        "黄色": "Yellow",
+        "黒": "Black"
+        }
+    }
+}

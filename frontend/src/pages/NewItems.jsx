@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import heic2any from "heic2any";
+import { useTranslation } from 'react-i18next';
 
 
 const NewItems = () => {
@@ -33,7 +34,8 @@ const NewItems = () => {
     const [foundDate, setFoundDate] = useState('') //YYYY-MM-DD
     const [foundPeriod, setFoundPeriod] = useState('AM')
     const [foundTime, setFoundTime] = useState('') //HH
-     
+    const { t } = useTranslation(); 
+
     const toggle = (value, list, setter) =>
         list.includes(value)
             ? setter(list.filter((v) => v !== value))
@@ -151,9 +153,9 @@ const NewItems = () => {
     return (
         <main className="p-4">
             <div className="max-w-md mx-auto space-y-4">
-                <h1 className="text-xl font-bold">落とし物登録</h1>
+                <h1 className="text-xl font-bold">{t('newItems.desc')}</h1>
                 <label className="block">
-                    <span className="text-gray-700">写真（最大５枚）</span>
+                    <span className="text-gray-700">{t('newItems.images')}</span>
                     <input
                         type='file'
                         accept='image/*'
@@ -186,7 +188,7 @@ const NewItems = () => {
                     </div>
                 )}
                 <div>
-                    <span className='text-gray-700'>落とし物タグ</span>
+                    <span className='text-gray-700'>{t('newItems.itemTags')}</span>
                         <div className='flex flex-wrap gap-2 mt-2'>
                             {itemTagOptions.map((it) => (
                                 <button
@@ -205,7 +207,7 @@ const NewItems = () => {
                         </div>
                 </div>
                 <div>
-                    <span className='text-gray-700'>色タグ
+                    <span className='text-gray-700'>{t('newItems.colorTags')}
                         <div className='flex flex-wrap gap-2 mt-2'>
                             {colorTagOptions.map((it) => (
                                 <button
@@ -225,7 +227,7 @@ const NewItems = () => {
                     </span>
                 </div>
                 <div>
-                    <span className='text-gray-700'>発見場所タグ
+                    <span className='text-gray-700'>{t('newItems.placeTags')}
                         <div className='flex flex-wrap gap-2 mt-2'>
                             {placeTagOptions.map((it) => (
                                 <button
@@ -245,7 +247,7 @@ const NewItems = () => {
                     </span>
                 </div>
                 <div>
-                    <span className='text-gray-700'>発見日時</span>
+                    <span className='text-gray-700'>{t('newItems.date')}</span>
                     <div className='flex items-center gap-2 mt-2'>
                         <input
                             type='date'
@@ -258,8 +260,8 @@ const NewItems = () => {
                             onChange={(e) => setFoundPeriod(e.target.value)}
                             className='border rounded p-1'
                         >
-                            <option value='AM'>午前</option>
-                            <option value='PM'>午後</option>
+                            <option value='AM'>{t('newItems.AM')}</option>
+                            <option value='PM'>{t('newItems.PM')}</option>
                         </select>
                         <input
                             type='time'
@@ -270,20 +272,20 @@ const NewItems = () => {
                     </div>
                 </div>
                 <div>
-                    <span className='text-sm font-medium text-gray-700'>メールアドレス</span>
-                    <p className='text-sm text-gray-600 mb-1'>こちらのメールアドレスを使って落とし物の所有者とコンタクトが可能となります</p>
+                    <span className='text-sm font-medium text-gray-700'>{t('newItems.email')}</span>
+                    <p className='text-sm text-gray-600 mb-1'>{t('newItems.emailDisc')}</p>
                     <input
                         type='emmail'
-                        placeholder='メールアドレスを入力'
+                        placeholder={t('newItems.emailInput')}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         className='border-2 rouded input input-bordered w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500'
                         disabled={isLoggedIn}
                     />
-                    <span className='text-sm font-medium text-gray-700'>メールアドレス(確認)</span>
+                    <span className='text-sm font-medium text-gray-700'>{t('newItems.emailCom')}</span>
                     <input
                         type='email'
-                        placeholder='メールアドレスを入力(確認)'
+                        placeholder={t('newItems.emailCom')}
                         value={confirmEmail}
                         onChange={(e) => setConfirmEmail(e.target.value)}
                         className='border-2 rouded input input-bordered w-full border-gray-300 focus:border-blue-500 focus:ring-blue-500'
@@ -291,9 +293,9 @@ const NewItems = () => {
                     />
                 </div>
                 <div>
-                    <span className='text-sm font-medium text-gray-700'>その他備考等</span>
+                    <span className='text-sm font-medium text-gray-700'>{t('newItems.other')}</span>
                     <textarea
-                        placeholder='必要な情報を入力してください'
+                        placeholder={t('newItems.otherPlaceHold')}
                         value={other}
                         onChange={(e) => setOther(e.target.value)}
                         className='border-2 rounded input input-bordered w-full border-gray-300 p-2 min-h-[120px] resize-vertical'
@@ -309,7 +311,7 @@ const NewItems = () => {
                       : 'bg-blue-300 cursor-not-allowed'
                   }`}
                 >
-                  登録
+                  {t('newItems.submit')}
                 </button>
             </div>
         </main>
