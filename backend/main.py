@@ -50,6 +50,22 @@ def write_items_data(data_file, itemsData, record):
     with open(data_file, 'w', encoding='utf-8') as f:
         json.dump(itemsData, f, indent=4, ensure_ascii=False)
 
+def read_inquiries_data(data_file):
+    # お問い合わせデータの読み書き関数
+    if not os.path.exists(data_file):
+        return []
+    with open(data_file, 'r', encoding='utf-8') as f:
+        try:
+            return json.load(f)
+        except json.JSONDecodeError:
+            return []
+
+def write_inquiries_data(data_file, inquiriesData, record):
+    inquiriesData.append(record)
+    with open(data_file, 'w', encoding='utf-8') as f:
+        json.dump(inquiriesData, f, indent=4, ensure_ascii=False)
+
+INQUIRY_FILE = "inquiries.json"
 
 #To check the health of server
 @app.route("/api/health",methods=["GET"])
@@ -249,3 +265,21 @@ def search_items():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5002, debug=True)
+
+# お問い合わせ内容をjsonファイルに保存するエンドポイント
+@app.route('/api/report_inquiry', methods=["POST"])
+def report_inquiry():
+    if request.is_json:
+        data = request.json
+        # 通報IDを生成
+        inquiry_id = uuid.uuid4().hex
+        data['inquiry_id'] = inquiry_id
+        # 受付日時を追加（任意）
+        from datetime import datetime
+        data['created_at'] = datetime.now().isoformat()
+        # データ保存
+        inquiriesData = read_inquiries_data(INQUIRY_FILE)
+        write_inquiries_data(INQUIRY_FILE, inquiriesData, data)
+        return jsonify({"status": "Success", "inquiry_id": inquiry_id}), 201
+    else:
+        return jsonify({"status": "ERROR", "message": "Request must be JSON"}), 400
