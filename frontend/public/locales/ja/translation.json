@@ -1,6 +1,6 @@
 {
   "search_placeholder": "タグを選択...",
-  "no_options": "利用可能なオプションがありませ",
+  "no_options": "利用可能なオプションがありません",
   "tab": {
     "item": "落としたもの",
     "place": "落とした場所",
@@ -8,7 +8,8 @@
   },
   "buttons": {
     "search": "検索",
-    "register": "アイテム登録"
+    "register": "アイテム登録",
+    "contact": "通報/お問い合わせ"
   },
   "login": {
     "login": "ログイン",
@@ -101,5 +102,19 @@
      "黄色": "黄色",
      "黒": "黒"
     }
+ },
+ "contact": {
+    "name": "お問い合わせ",
+    "placeHold": "お問い合わせ内容を記入(出来るだけ詳細に記入をお願いします)",
+    "email": "メールアドレス",
+    "emailCom": "メールアドレス(確認)",
+    "submit": "送信",
+    "completeTitle": "お問い合わせが完了しました",
+    "completeMessage": "お問い合わせID: {{id}}、登録メールアドレス: {{email}}。この画面のスクリーンショットを撮ってください。"
+ },
+ "result": {
+  "list": "検索結果",
+  "color": "色",
+  "place": "場所"
  }
 }

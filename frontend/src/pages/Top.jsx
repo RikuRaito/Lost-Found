@@ -142,6 +142,8 @@ function Top() {
     
   }
 
+  
+
   // --- render --------------------------------------------------------------
   return (
     <main className="relative h-fit m-66">
@@ -246,19 +248,22 @@ function Top() {
                 </div>
               )}
         </div>
-        <button
-          className="
-            mt-6 px-6 py-2 rounded-xl
-            bg-blue-500 text-white font-semibold
-            hover:bg-blue-600 active:bg-blue-700
-            disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed
-            shadow-md transition-colors duration-150
-            w-fit mx-auto block
-          "
-          onClick={handleSearch}
-          >
-          {t('buttons.search')}
-        </button>
+        <div className="flex justify-center items-center">
+          <button
+            className="
+              mt-6 px-6 py-2 rounded-xl
+              bg-blue-500 text-white font-semibold
+              hover:bg-blue-600 active:bg-blue-700
+              disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed
+              shadow-md transition-colors duration-150
+              w-fit
+            "
+            onClick={handleSearch}
+            >
+            {t('buttons.search')}
+          </button>
+          
+        </div>
                 {/* プラットフォーム使い方セクション */}
         <div className="mt-12 flex flex-wrap justify-center gap-6 px-4">
           <div className="flex-1 max-w-xs p-6 bg-white border rounded-lg shadow">
