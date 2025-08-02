@@ -254,7 +254,7 @@ if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5002, debug=True)
 
 # お問い合わせ内容をjsonファイルに保存するエンドポイント
-@app.route('/api/report_inquiry', methods=["POST"])
+@app.route('/api/report', methods=["POST"])
 def report_inquiry():
     if request.is_json:
         data = request.json
