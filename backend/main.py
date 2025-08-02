@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request,send_from_directory
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
 import json, os, uuid
@@ -97,6 +97,10 @@ def login():
         return jsonify({"status":"NOTFOUND"}), 201
     else: return jsonify({"status":"ERROR"}), 400
 
+@app.route('/item_images/<path:filename>')
+def get_image(filename):
+    return send_from_directory(IMAGE_DIR, filename)
+
 #タグの取得用エンドポイント
 @app.route("/api/get_tags", methods=["GET"])
 def get_tags():
@@ -179,6 +183,7 @@ def new_items():
         'item_id': item_id
     }), 201
 
+#管理者用画面ログイン
 @app.route('/api/admin_login', methods=["POST"])
 def admin_login():
     data = request.get_json()
@@ -196,6 +201,50 @@ def admin_login():
             "status":'Failed',
             "message": "Invalid access"
         }), 401
+    
+#落とし物検索機能
+@app.route('/api/search_items', methods=['POST'])
+def search_items():
+    #送信 {‘item_tags’: itemTags, ‘color_tags’: color_tags, ‘place_tags’: place_tags}
+
+    if request.is_json:
+        data = request.get_json()
+        search_item = data.get('item_tags')
+        search_color = data.get('color_tags')
+        search_place = data.get('place_tags')
+        itemsData = read_items_data('itemsData.json')
+        weight = {} #タグ一致数管理辞書
+        for iD in itemsData:
+            item_id = iD.get('item_id')
+            weight[item_id] = 0
+            iD_tags = iD.get('tags')
+            iD_item = iD_tags.get('items')
+            iD_color = iD_tags.get('color')
+            iD_place = iD_tags.get('place')
+            #itemタグの一致数を取得．重みを付けて記録
+            for si in search_item:
+                for i in iD_item:
+                    if si == i: weight[item_id] += 10000
+            #colorタグの一致数を取得．重みをつけて記録
+            for sc in search_color:
+                for c in iD_color:
+                    if sc == c: weight[item_id] += 100
+            #placeタグの一致数を取得．重みを付けて記録
+            for sp in search_place:
+                for p in iD_place:
+                    if sp == p: weight[item_id] += 1
+        #重みで降順にソート
+        sorted_weight = sorted(weight.items(), key=lambda x:x[1], reverse=True)
+        res = []
+        #ソート結果を基に検索結果を作成
+        for sw in sorted_weight:
+            k = sw[0]
+            for iD in itemsData:
+                if iD['item_id'] == k: res.append(iD)
+
+        return jsonify({'status':'SUCCESS', 'list':res}),201
+
+    else :return jsonify({'status':'ERROR'}),400
 
 
 if __name__ == "__main__":

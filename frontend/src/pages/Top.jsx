@@ -128,9 +128,14 @@ function Top() {
     if (!res.ok) {
         throw new Error(`HTTPS error. status: ${res.status}`)
     }
-    const result = await res.json()
-    localStorage.setItem('result', JSON.stringify(result))
-    navigate('/');
+
+    // レスポンスのJSONデータをパースする
+    const result = await res.json();
+    
+    // localStorageに保存する際は、JSON.stringify()で文字列に変換する
+    localStorage.setItem('result', JSON.stringify(result.list));
+    navigate('/Search_results');
+
     } catch (err) {
         console.log('エラーが発生しました', err)
     }
