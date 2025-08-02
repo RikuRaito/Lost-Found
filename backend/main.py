@@ -1,3 +1,8 @@
+# お問い合わせ内容一覧を取得するエンドポイント
+@app.route('/api/get_inquiries', methods=["GET"])
+def get_inquiries():
+    inquiriesData = read_inquiries_data(INQUIRY_FILE)
+    return jsonify(inquiriesData), 200
 from flask import Flask, jsonify, request
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
