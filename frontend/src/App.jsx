@@ -10,6 +10,7 @@ import Notification from './pages/Notification'
 import AdminLogin from './pages/AdminLogin'
 import AnimatedLinesCircle from './components/Animation'
 import SearchResult from './pages/SearchResult'
+import ItemDetails from './pages/ItemDetails'
 
 
 function App() {
@@ -43,6 +44,7 @@ useEffect(() => {
           <Route path='/Notification' element={<Notification />} />
           <Route path='/New_items' element={<NewItems />} />
           <Route path='/Search_results' element={<SearchResult/>} />
+          <Route path='/item/:itemId' element={<ItemDetails />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/Signup" element={<Signup />} />
           <Route path="*" element={<Top /> } />
