@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request,send_from_directory
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
 import json, os, uuid
@@ -96,6 +96,10 @@ def login():
         #見つからなかったら打ち間違いor未登録
         return jsonify({"status":"NOTFOUND"}), 201
     else: return jsonify({"status":"ERROR"}), 400
+
+@app.route('/item_images/<path:filename>')
+def get_image(filename):
+    return send_from_directory(IMAGE_DIR, filename)
 
 #タグの取得用エンドポイント
 @app.route("/api/get_tags", methods=["GET"])
