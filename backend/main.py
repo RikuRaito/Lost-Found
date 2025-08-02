@@ -267,19 +267,34 @@ if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5002, debug=True)
 
 # お問い合わせ内容をjsonファイルに保存するエンドポイント
-@app.route('/api/report_inquiry', methods=["POST"])
-def report_inquiry():
+@app.route('/api/report', methods=["POST"])
+def report():
     if request.is_json:
         data = request.json
         # 通報IDを生成
         inquiry_id = uuid.uuid4().hex
         data['inquiry_id'] = inquiry_id
+        # メールアドレスがあればinquiry_emailとしても保存
+        if 'email' in data:
+            data['inquiry_email'] = data['email']
         # 受付日時を追加（任意）
         from datetime import datetime
         data['created_at'] = datetime.now().isoformat()
         # データ保存
         inquiriesData = read_inquiries_data(INQUIRY_FILE)
         write_inquiries_data(INQUIRY_FILE, inquiriesData, data)
-        return jsonify({"status": "Success", "inquiry_id": inquiry_id}), 201
+        return jsonify({"status": "Success", "inquiry_id": inquiry_id, "inquiry_email": data.get('inquiry_email', None)}), 201
     else:
         return jsonify({"status": "ERROR", "message": "Request must be JSON"}), 400
+    
+# お問い合わせ内容一覧と登録済みメールアドレス一覧を取得するエンドポイント
+@app.route('/api/read', methods=["GET"])
+def read():
+    inquiriesData = read_inquiries_data(INQUIRY_FILE)
+    # 登録済みメールアドレス一覧を取得
+    userData = read_user_data("userData.json")
+    emails = [u.get('email') for u in userData if 'email' in u]
+    return jsonify({
+        "inquiries": inquiriesData,
+        "emails": emails
+    }), 200
