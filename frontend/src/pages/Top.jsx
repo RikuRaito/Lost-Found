@@ -1,30 +1,20 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const items = [
-    "財布", "スマホ", "バッグ", "充電器", "イヤホン"
-];
-
-const colors = [
-    "茶色", "赤", "青", "オレンジ", "黄色", "黒"
-]
-
-const places = {
-    "東京都": [
-        "全域", "千代田区", "中央区", "港区", "新宿区", "文京区", "台東区", "墨田区", "江東区", "品川区",
-        "目黒区", "大田区", "世田谷区", "渋谷区", "中野区", "杉並区", "豊島区", "北区", "荒川区", "板橋区",
-        "練馬区", "足立区", "葛飾区", "江戸川区"
-    ]
-};
-
-const allPlaces = Object.values(places).flat();
-
 function Top() {
-  const [tags, setTags] = useState([]);
+  const [itemTags, setItemTags] = useState([]);
+  const [colorTags, setColorTags] = useState([]);
+  const [placeTags, setPlaceTags] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [activeTab, setActiveTab] = useState('item'); // 'item' | 'place' | 'color'
   const wrapperRef = useRef(null);
   const navigate = useNavigate();
+  const [itemTagOptions, setItemTagOptions] = useState([])
+  const [colorTagOptions, setColorTagOptions] = useState([])
+  const [placeTagOptions, setPlaceTagOptions] = useState([])
+
+  // 選択済みタグをカテゴリ問わずまとめる
+  const combinedTags = [...itemTags, ...placeTags, ...colorTags];
 
   // --- server health‑check -------------------------------------------------
   const healthCheck = async () => {
@@ -55,21 +45,63 @@ function Top() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    const getTags = async() => {
+      try {
+        const res = await fetch('/api/get_tags',{
+          method: 'GET',
+          headers: {'Accept': 'application/json'}
+        });
+        if (!res.ok) {
+          throw new Error(`Server responded with ${res.message}`)
+        }
+        const data = await res.json();
+        setItemTagOptions(data.item_tags)
+        setColorTagOptions(data.color_tags)
+        const flattenedPlaces = Object.values(data.place_tags).flat();
+        setPlaceTagOptions(flattenedPlaces)
+      } catch(err) {
+        console.log('タグ取得の際にエラーが発生しました')
+      }
+    };
+    getTags();
+  }, [])
+
   const availableOptions =
     (activeTab === 'item'
-      ? items
+      ? itemTagOptions
       : activeTab === 'place'
-      ? allPlaces
-      : colors // activeTab === 'color'
-    ).filter((opt) => !tags.includes(opt));
+      ? placeTagOptions
+      : colorTagOptions // activeTab === 'color'
+    ).filter(opt => {
+        if (activeTab === 'item') return !itemTags.includes(opt);
+        if (activeTab === 'place') return !placeTags.includes(opt);
+        return !colorTags.includes(opt);
+    });
 
   const handleOptionClick = (option) => {
-    setTags([...tags, option]);
-    setShowDropdown(false)
-  }
+    // カテゴリごとに state を更新
+    if (activeTab === 'item') {
+      setItemTags(prev => prev.includes(option) 
+        ? prev.filter(tag => tag !== option) 
+        : [...prev, option]);
+    } else if (activeTab === 'place') {
+      setPlaceTags(prev => prev.includes(option) 
+        ? prev.filter(tag => tag !== option) 
+        : [...prev, option]);
+    } else { // 'color'
+      setColorTags(prev => prev.includes(option) 
+        ? prev.filter(tag => tag !== option) 
+        : [...prev, option]);
+    }
+    setShowDropdown(false);
+  };
 
-  const removeTag = (idxToRemove) => {
-    setTags(tags.filter((_, idx) => idx !== idxToRemove));
+  // カテゴリ問わずタグを削除
+  const removeTag = (tagToRemove) => {
+    setItemTags(prev => prev.filter(t => t !== tagToRemove));
+    setPlaceTags(prev => prev.filter(t => t !== tagToRemove));
+    setColorTags(prev => prev.filter(t => t !== tagToRemove));
   };
 
   const handleSearch = async() => {
@@ -80,7 +112,9 @@ function Top() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            'tags': tags
+            'item_tags': itemTags,
+            'color_tags': colorTags,
+            'place_tags': placeTags
         })
     })
     if (!res.ok) {
@@ -109,7 +143,7 @@ function Top() {
           </label>
 
           <div className="flex flex-wrap gap-2 mb-2">
-            {tags.map((tag, idx) => (
+            {combinedTags.map((tag, idx) => (
               <span
                 key={idx}
                 className="flex items-center bg-blue-100 text-blue-800 text-sm px-2 py-1 rounded-xl"
@@ -117,7 +151,7 @@ function Top() {
                 {tag}
                 <button
                   className="ml-1 text-blue-500 hover:text-blue-700"
-                  onClick={() => removeTag(idx)}
+                  onClick={() => removeTag(tag)}
                 >
                   &times;
                 </button>
@@ -205,6 +239,21 @@ function Top() {
           >
           検索
         </button>
+                {/* プラットフォーム使い方セクション */}
+        <div className="mt-12 flex flex-wrap justify-center gap-6 px-4">
+          <div className="flex-1 max-w-xs p-6 bg-white border rounded-lg shadow">
+            <h3 className="text-lg font-semibold mb-2">1. 落とし物の検索方法</h3>
+            <p className="text-sm text-gray-600">上の検索欄からタグを選択して「検索」ボタンを押してください。</p>
+          </div>
+          <div className="flex-1 max-w-xs p-6 bg-white border rounded-lg shadow">
+            <h3 className="text-lg font-semibold mb-2">2. 落とし物登録方法</h3>
+            <p className="text-sm text-gray-600">画面右上の「落とし物登録」ボタンから登録フォームにアクセスできます。</p>
+          </div>
+          <div className="flex-1 max-w-xs p-6 bg-white border rounded-lg shadow">
+            <h3 className="text-lg font-semibold mb-2">3. 回収者へのコンタクト</h3>
+            <p className="text-sm text-gray-600">検索結果一覧から詳細ページに移動してマッチングボタンを押してください。その際に発行されるマッチングIDを使ってコンタクトが可能です。</p>
+          </div>
+        </div>
       </div>
     </main>
   );

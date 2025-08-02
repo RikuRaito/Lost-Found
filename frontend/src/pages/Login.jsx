@@ -41,26 +41,39 @@ useEffect(() => {
 }, [isLoggedIn, email]);
   // 3) ログイン処理
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       const res = await fetch('/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
-      })
+        body: JSON.stringify({
+          email: email,
+          password: password
+        }),
+      });
 
       if (!res.ok) {
-        throw new Error(`HTTP error. status: ${res.status}`)
+        throw new Error(`HTTP error. status: ${res.status}`);
       }
 
-      // 認証 OK
-      setIsLoggedIn(true)
-      localStorage.setItem('email', email)
-      navigate('/');
+      const data = await res.json();
+      // バックエンドの status フィールドで認証結果を判定
+      if (data.status === 'SUCCESS') {
+        setIsLoggedIn(true);
+        localStorage.setItem('email', email);
+        navigate('/');
+      } else if (data.status === 'MISS') {
+        alert('パスワードが正しくありません。');
+      } else if (data.status === 'NOTFOUND') {
+        alert('メールアドレスが見つかりません。');
+      } else {
+        alert('ログインに失敗しました。');
+      }
     } catch (err) {
-      console.log('ログイン失敗', err)
+      console.log('ログイン失敗', err);
+      alert('サーバーへの接続中にエラーが発生しました。');
     }
   }
 
