@@ -59,7 +59,6 @@ const Contact = () => {
         <main className="flex items-center justify-center bg-gray-50 px-4 h-[calc(100vh-4rem)] overflow-hidden">
             <form
             className="w-full max-w-md space-y-6 bg-white p-8 rounded-xl shadow-lg border-t-4 border-blue-500"
-            onClick={handleSubmit}
             >
                 <h1 className="text-2xl font-bold text-center mb-8">
                     LOST<span className="text-blue-600">FOUND</span> {t('contact.name')}
@@ -93,8 +92,10 @@ const Contact = () => {
                 <button
                     type="submit"
                     className="w-full py-2 rounded-md bg-blue-500 hover:bg-blue-700 text-white font-semibold shadow-sm transition-colors"
+                    onClick={handleSubmit}
                     >
                     {t('contact.submit')}
+                    
                 </button>
             </form>
         </main>

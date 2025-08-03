@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
+
 const Header = ({isLoggedIn}) => {
     const { i18n } = useTranslation();
     const [langDropdown, setlangDropdown] = useState(false)
@@ -9,6 +10,14 @@ const Header = ({isLoggedIn}) => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const wrapperRef = useRef(null);
+
+    const langLabels = {
+      ja: '日本語',
+      en: 'English',
+      zh: '中文',
+      es: 'Español',
+      ko: '한국어'
+    };
 
     useEffect(() => {
       function handleClickOutside(event) {
@@ -22,6 +31,7 @@ const Header = ({isLoggedIn}) => {
 
     // Header.jsx 内
     const switchLanguage = (lng) => {
+        console.log(lng)
         i18n.changeLanguage(lng).then(() => {
             console.log('language changed to', i18n.language);
         }).catch((e) => {
@@ -81,7 +91,7 @@ const Header = ({isLoggedIn}) => {
                     className="px-2 py-1 border rounded"
                     onClick={() => setlangDropdown((v) => !v)}
                   >
-                    {current === 'ja' ? '日本語' : 'English'}
+                    {langLabels[current] || current}
                   </button>
                   {langDropdown && (
                     <div className="absolute right-0 mt-2 w-32 bg-white border rounded shadow-lg z-30">
@@ -96,6 +106,24 @@ const Header = ({isLoggedIn}) => {
                         onClick={() => switchLanguage('en')}
                       >
                         English
+                      </button>
+                      <button
+                        className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+                        onClick={() => switchLanguage('zh')}
+                      >
+                        Chinese
+                      </button>
+                      <button
+                        className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+                        onClick={() => switchLanguage('es')}
+                      >
+                        Spanish
+                      </button>
+                      <button
+                        className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+                        onClick={() => switchLanguage('ko')}
+                      >
+                        Korean
                       </button>
                     </div>
                   )}
