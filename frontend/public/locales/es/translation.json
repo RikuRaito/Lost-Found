@@ -68,36 +68,16 @@
     "tag_values": {
       "items": {
         "財布": "Cartera",
-        "スマホ": "Teléfono",
+        "スマホ": "Teléfono inteligente",
         "バッグ": "Bolso",
         "充電器": "Cargador",
-        "イヤホン": "Auriculares"
+        "イヤホン": "Auriculares",
+        "パスポート": "Pasaporte"
       },
       "places": {
-        "全域": "Toda la zona",
-        "千代田区": "Distrito Chiyoda",
-        "中央区": "Distrito Chuo",
-        "港区": "Distrito Minato",
-        "新宿区": "Distrito Shinjuku",
-        "文京区": "Distrito Bunkyo",
-        "台東区": "Distrito Taito",
-        "墨田区": "Distrito Sumida",
-        "江東区": "Distrito Koto",
-        "品川区": "Distrito Shinagawa",
-        "目黒区": "Distrito Meguro",
-        "大田区": "Distrito Ota",
-        "世田谷区": "Distrito Setagaya",
-        "渋谷区": "Distrito Shibuya",
-        "中野区": "Distrito Nakano",
-        "杉並区": "Distrito Suginami",
-        "豊島区": "Distrito Toshima",
-        "北区": "Distrito Kita",
-        "荒川区": "Distrito Arakawa",
-        "板橋区": "Distrito Itabashi",
-        "練馬区": "Distrito Nerima",
-        "足立区": "Distrito Adachi",
-        "葛飾区": "Distrito Katsushika",
-        "江戸川区": "Distrito Edogawa"
+        "第一ターミナル": "Terminal 1",
+        "第二ターミナル": "Terminal 2",
+        "第三ターミナル": "Terminal 3"
       },
       "color": {
         "茶色": "Marrón",
