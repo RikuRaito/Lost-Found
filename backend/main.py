@@ -255,6 +255,7 @@ def search_items():
         #ソート結果を基に検索結果を作成
         for sw in sorted_weight:
             k = sw[0]
+            if sw[1] < 10000: break
             for iD in itemsData:
                 if iD['item_id'] == k: res.append(iD)
 
