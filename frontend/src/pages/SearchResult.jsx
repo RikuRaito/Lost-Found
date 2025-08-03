@@ -30,6 +30,7 @@ const SearchResult = () => {
           {results.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
                   {results.map((item, index) => (
+                    <Link to={`/item/${item.item_id}`} key={index}>
                       <div key={index} className="bg-white rounded-xl shadow-lg overflow-hidden transition-all hover:scale-105 duration-300">
                           {/* 画像のパスはitem_id/filenameの形式で返されると仮定 */}
                           {item.images && item.images.length > 0 && (
@@ -59,6 +60,8 @@ const SearchResult = () => {
                               <p className="text-sm text-gray-700">{item.other || '詳細情報なし'}</p>
                           </div>
                       </div>
+                    </Link>
+
                   ))}
               </div>
           ) : (
