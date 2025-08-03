@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import './Top.css'
+
 
 function Top() {
   const [itemTags, setItemTags] = useState([]);
@@ -266,15 +268,15 @@ function Top() {
         </div>
                 {/* プラットフォーム使い方セクション */}
         <div className="mt-12 flex flex-wrap justify-center gap-6 px-4">
-          <div className="flex-1 max-w-xs p-6 bg-white border rounded-lg shadow">
+          <div className="flex-1 max-w-xs p-6 bg-white animated-border rounded-lg shadow">
             <h3 className="text-lg font-semibold mb-2">{t('how_to.step1.title')}</h3>
             <p className="text-sm text-gray-600">{t('how_to.step1.desc')}</p>
           </div>
-          <div className="flex-1 max-w-xs p-6 bg-white border rounded-lg shadow">
+          <div className="flex-1 max-w-xs p-6 bg-white animated-border rounded-lg shadow">
             <h3 className="text-lg font-semibold mb-2">{t('how_to.step2.title')}</h3>
             <p className="text-sm text-gray-600">{t('how_to.step2.desc')}</p>
           </div>
-          <div className="flex-1 max-w-xs p-6 bg-white border rounded-lg shadow">
+          <div className="flex-1 max-w-xs p-6 bg-white animated-border rounded-lg shadow">
             <h3 className="text-lg font-semibold mb-2">{t('how_to.step3.title')}</h3>
             <p className="text-sm text-gray-600">{t('how_to.step3.desc')}</p>
           </div>

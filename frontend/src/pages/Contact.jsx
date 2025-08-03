@@ -33,9 +33,9 @@ const Contact = () => {
                 console.log('エラーが発生しました')
             }
             const result = await res.json();
-            const { id, email: respEmail } = result;
-            console.log('Report ID:', id, 'Email:', respEmail);
-            setReportId(id);
+            const { inquiry_id, email: respEmail } = result;
+            console.log('Report ID:', inquiry_id, 'Email:', respEmail);
+            setReportId(inquiry_id);
             setReturnedEmail(respEmail);
             setComplete(true);
         } catch (err) {

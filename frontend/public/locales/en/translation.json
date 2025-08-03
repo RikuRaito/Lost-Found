@@ -38,7 +38,11 @@
     "emailDisc": "This email will be used to contact the item's owner",
     "other": "Other notes",
     "otherPlaceHold": "Enter any necessary information",
-    "submit": "Submit"
+    "submit": "Submit",
+    "completed": "Registering fineshed!",
+    "itemId": "Item ID",
+    "compDesc": "This will be necessary to contact the owner, so please take a screenshot of this page.",
+    "home": "Back to Home"
   },
   "access": {
     "access": "Lost item access",

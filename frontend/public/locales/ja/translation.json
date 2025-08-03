@@ -26,6 +26,7 @@
     "desc": "落とし物登録",
     "images": "写真(最大5枚)",
     "notSelected": "選択されていません",
+    "selectFile": "ファイルを選択",
     "itemTags": "落とし物タグ",
     "colorTags": "色タグ",
     "placeTags": "発見場所タグ",
@@ -38,7 +39,11 @@
     "emailDisc": "こちらのメールアドレスを使って落とし物の所有者とコンタクトが可能になります",
     "other": "その他備考等",
     "otherPlaceHold": "必要な情報を入力してください",
-    "submit": "登録"
+    "submit": "登録",
+    "completed": "登録が完了しました",
+    "itemId": "Item ID",
+    "compDesc": "所有者とコンタクトを取るために必ず必要になりますので，この画面のスクリーンショットを撮ってください",
+    "home": "Back to Home"
   },
   "access": {
     "access": "落とし物アクセス",
