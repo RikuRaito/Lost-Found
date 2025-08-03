@@ -1,0 +1,20 @@
+/* Top.css */
+@keyframes rotate-border {
+  0% {
+    border-image-source: linear-gradient(0deg, #3b82f6, #60a5fa);
+  }
+  100% {
+    border-image-source: linear-gradient(360deg, #3b82f6, #60a5fa);
+  }
+}
+
+.animated-border {
+  position: relative;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 1.5rem;
+  animation: rotate-border 4s linear infinite;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(0deg, #3b82f6, #60a5fa);
+}
+

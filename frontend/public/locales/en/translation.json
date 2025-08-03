@@ -1,75 +1,80 @@
 {
-  "search_placeholder": "Select tags...",
-  "no_options": "No available options",
-  "tab": {
-    "item": "Item",
-    "place": "Place",
-    "color": "Color"
-  },
-  "buttons": {
-    "search": "Search",
-    "register": "Register item",
-    "contact": "Contact Us"
-  },
-  "login": {
-    "login": "Login",
-    "alreadyLoggedIn": "Already logged in",
-    "welcome": "Welcome",
-    "welcome2": "to",
-    "email": "Email",
-    "pwd": "Password",
-    "doesntHave": "Don't have an account?",
-    "signupHere": "Sign up here",
-    "logout": "Logout"
-  },
-  "newItems": {
-    "desc": "Lost item registration",
-    "images": "Photos (up to 5)",
-    "notSelected": "Not selected",
-    "itemTags": "Item tags",
-    "colorTags": "Color tags",
-    "placeTags": "Place tags",
-    "date": "Date found",
-    "AM": "AM",
-    "PM": "PM",
-    "email": "Email",
-    "emailCom": "Confirm email",
-    "emailInput": "Enter your email",
-    "emailDisc": "This email will be used to contact the item's owner",
-    "other": "Other notes",
-    "otherPlaceHold": "Enter any necessary information",
-    "submit": "Submit"
-  },
-  "access": {
-    "access": "Lost item access",
-    "id": "Lost Item ID",
-    "email": "Email",
-    "submit": "Access"
-  },
-  "how_to": {
-        "step1": {
-        "title": "1. How to search for lost items",
-        "desc": "Select tags from the search bar above and click the 'Search' button."
-        },
-        "step2": {
-        "title": "2. How to register a lost item",
-        "desc": "Click the 'Register Item' button in the top right to access the registration form."
-        },
-        "step3": {
+    "search_placeholder": "Select tags...",
+    "no_options": "No available options",
+    "tab": {
+      "item": "Item lost",
+      "place": "Place lost",
+      "color": "Color"
+    },
+    "buttons": {
+      "search": "Search",
+      "register": "Register Item",
+      "contact": "Report / Contact"
+    },
+    "login": {
+      "login": "Login",
+      "alreadyLoggedIn": "You are already logged in",
+      "welcome": "Welcome",
+      "welcome2": "to",
+      "email": "Email",
+      "pwd": "Password",
+      "doesntHave": "Don’t have an account?",
+      "signupHere": "Sign up here",
+      "logout": "Logout"
+    },
+    "newItems": {
+      "desc": "Lost-item registration",
+      "images": "Photos (up to 5)",
+      "notSelected": "No file selected",
+      "selectFile": "Choose file",
+      "itemTags": "Item tags",
+      "colorTags": "Color tags",
+      "placeTags": "Found-place tags",
+      "date": "Date found",
+      "AM": "AM",
+      "PM": "PM",
+      "email": "Email",
+      "emailCom": "Confirm email",
+      "emailInput": "Enter your email",
+      "emailDisc": "This email will be used to contact the owner of the item",
+      "other": "Other notes",
+      "otherPlaceHold": "Enter any necessary information",
+      "submit": "Register",
+      "completed": "Registration completed",
+      "itemId": "Item ID",
+      "compDesc": "You must show this when contacting the owner. Please take a screenshot of this page.",
+      "home": "Back to Home"
+    },
+    "access": {
+      "access": "Item access",
+      "id": "Item ID",
+      "email": "Email",
+      "submit": "Access"
+    },
+    "how_to": {
+      "step1": {
+        "title": "1. How to search",
+        "desc": "Select tags in the search bar above and press “Search”."
+      },
+      "step2": {
+        "title": "2. How to register an item",
+        "desc": "Click the “Register Item” button in the top-right corner to open the form."
+      },
+      "step3": {
         "title": "3. How to contact the finder",
-        "desc": "From the search results, go to the detail page and click the matching button. Use the issued matching ID to contact them."
-        }
+        "desc": "Open the details page from the search results and press the matching button. Use the issued matching ID to contact the finder."
+      }
     },
     "tag_values": {
-        "items": {
+      "items": {
         "財布": "Wallet",
         "スマホ": "Smartphone",
         "バッグ": "Bag",
         "充電器": "Charger",
         "イヤホン": "Earphones"
-        },
-        "places": {
-        "全域": "All areas in Tokyo",
+      },
+      "places": {
+        "全域": "All areas",
         "千代田区": "Chiyoda Ward",
         "中央区": "Chuo Ward",
         "港区": "Minato Ward",
@@ -93,23 +98,28 @@
         "足立区": "Adachi Ward",
         "葛飾区": "Katsushika Ward",
         "江戸川区": "Edogawa Ward"
-        },
-        "color": {
+      },
+      "color": {
         "茶色": "Brown",
         "赤": "Red",
         "青": "Blue",
         "オレンジ": "Orange",
         "黄色": "Yellow",
         "黒": "Black"
-        }
+      }
     },
     "contact": {
-    "name": "Contact Us",
-    "placeHold": "Please describe your inquiry in detail",
-    "email": "Email",
-    "emailCom": "Comfirm email",
-    "submit": "Submit",
-    "completeTitle": "Inquiry Submitted",
-    "completeMessage": "Inquiry ID: {{id}}、Registerred Email: {{email}}. Please take a screenshot of this page"
- }
+      "name": "Contact",
+      "placeHold": "Enter your inquiry (please be as detailed as possible)",
+      "email": "Email",
+      "emailCom": "Confirm email",
+      "submit": "Send",
+      "completeTitle": "Inquiry sent",
+      "completeMessage": "Inquiry ID: {{id}}, Registered email: {{email}}. Please take a screenshot of this page."
+    },
+    "result": {
+      "list": "Search Results",
+      "color": "Color",
+      "place": "Place"
+    }
 }

@@ -1,0 +1,125 @@
+{
+    "search_placeholder": "Seleccione etiquetas...",
+    "no_options": "No hay opciones disponibles",
+    "tab": {
+      "item": "Objeto perdido",
+      "place": "Lugar",
+      "color": "Color"
+    },
+    "buttons": {
+      "search": "Buscar",
+      "register": "Registrar objeto",
+      "contact": "Reportar / Contacto"
+    },
+    "login": {
+      "login": "Iniciar sesión",
+      "alreadyLoggedIn": "Ya has iniciado sesión",
+      "welcome": "Bienvenido",
+      "welcome2": "a",
+      "email": "Correo electrónico",
+      "pwd": "Contraseña",
+      "doesntHave": "¿No tienes cuenta?",
+      "signupHere": "Regístrate aquí",
+      "logout": "Cerrar sesión"
+    },
+    "newItems": {
+      "desc": "Registro de objeto perdido",
+      "images": "Fotos (máx. 5)",
+      "notSelected": "Ningún archivo seleccionado",
+      "selectFile": "Elegir archivo",
+      "itemTags": "Etiquetas de objeto",
+      "colorTags": "Etiquetas de color",
+      "placeTags": "Etiquetas de lugar",
+      "date": "Fecha de hallazgo",
+      "AM": "AM",
+      "PM": "PM",
+      "email": "Correo electrónico",
+      "emailCom": "Confirmar correo",
+      "emailInput": "Introduce tu correo",
+      "emailDisc": "Usaremos este correo para contactar al propietario",
+      "other": "Otros comentarios",
+      "otherPlaceHold": "Introduce la información necesaria",
+      "submit": "Registrar",
+      "completed": "Registro completado",
+      "itemId": "ID del objeto",
+      "compDesc": "Necesitarás este ID para contactar al propietario. Haz una captura de esta pantalla.",
+      "home": "Volver al inicio"
+    },
+    "access": {
+      "access": "Acceso al objeto",
+      "id": "ID del objeto",
+      "email": "Correo",
+      "submit": "Acceder"
+    },
+    "how_to": {
+      "step1": {
+        "title": "1. Cómo buscar",
+        "desc": "Selecciona etiquetas en la barra superior y pulsa «Buscar»."
+      },
+      "step2": {
+        "title": "2. Cómo registrar un objeto",
+        "desc": "Pulsa «Registrar objeto» en la esquina superior derecha para abrir el formulario."
+      },
+      "step3": {
+        "title": "3. Cómo contactar al hallador",
+        "desc": "Desde los resultados, abre la página de detalles y pulsa el botón de vinculación. Usa el ID generado para contactar."
+      }
+    },
+    "tag_values": {
+      "items": {
+        "財布": "Cartera",
+        "スマホ": "Teléfono",
+        "バッグ": "Bolso",
+        "充電器": "Cargador",
+        "イヤホン": "Auriculares"
+      },
+      "places": {
+        "全域": "Toda la zona",
+        "千代田区": "Distrito Chiyoda",
+        "中央区": "Distrito Chuo",
+        "港区": "Distrito Minato",
+        "新宿区": "Distrito Shinjuku",
+        "文京区": "Distrito Bunkyo",
+        "台東区": "Distrito Taito",
+        "墨田区": "Distrito Sumida",
+        "江東区": "Distrito Koto",
+        "品川区": "Distrito Shinagawa",
+        "目黒区": "Distrito Meguro",
+        "大田区": "Distrito Ota",
+        "世田谷区": "Distrito Setagaya",
+        "渋谷区": "Distrito Shibuya",
+        "中野区": "Distrito Nakano",
+        "杉並区": "Distrito Suginami",
+        "豊島区": "Distrito Toshima",
+        "北区": "Distrito Kita",
+        "荒川区": "Distrito Arakawa",
+        "板橋区": "Distrito Itabashi",
+        "練馬区": "Distrito Nerima",
+        "足立区": "Distrito Adachi",
+        "葛飾区": "Distrito Katsushika",
+        "江戸川区": "Distrito Edogawa"
+      },
+      "color": {
+        "茶色": "Marrón",
+        "赤": "Rojo",
+        "青": "Azul",
+        "オレンジ": "Naranja",
+        "黄色": "Amarillo",
+        "黒": "Negro"
+      }
+    },
+    "contact": {
+      "name": "Contacto",
+      "placeHold": "Describe tu consulta (cuanto más detalle, mejor)",
+      "email": "Correo",
+      "emailCom": "Confirmar correo",
+      "submit": "Enviar",
+      "completeTitle": "Consulta enviada",
+      "completeMessage": "ID de consulta: {{id}}, Correo registrado: {{email}}. Haz una captura de esta pantalla."
+    },
+    "result": {
+      "list": "Resultados de búsqueda",
+      "color": "Color",
+      "place": "Lugar"
+    }
+  }

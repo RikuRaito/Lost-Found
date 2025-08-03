@@ -36,6 +36,11 @@ const NewItems = () => {
     const [foundTime, setFoundTime] = useState('') //HH
     const { t } = useTranslation(); 
 
+    const translateTag = (category, tag) => {
+      if (!tag) return '';
+      return t(`tag_values.${category}.${tag}`, { defaultValue: tag });
+    };
+
     const toggle = (value, list, setter) =>
         list.includes(value)
             ? setter(list.filter((v) => v !== value))
@@ -136,15 +141,15 @@ const NewItems = () => {
       return (
         <main className="p-4">
           <div className="max-w-md mx-auto space-y-4">
-            <h2 className="text-xl font-bold">登録が完了しました！</h2>
-            <p>忘れ物ID: <span className="font-mono">{newItemId}</span></p>
-            <p>メールアドレス: <span className="font-mono">{NewItemEmail}</span></p>
-            <p>所有者とコンタクトを取るために必ず必要になりますので，この画面のスクリーンショットを撮ってください</p>
+            <h2 className="text-xl font-bold">{t('newItems.completed')}</h2>
+            <p>{t('newItems.itemId')}: <span className="font-mono">{newItemId}</span></p>
+            <p>{t('newItems.email')}: <span className="font-mono">{NewItemEmail}</span></p>
+            <p>{t('newItems.comDesc')}</p>
             <button
               onClick={() => navigate('/')}
               className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
             >
-              ホームに戻る
+              {t('newItems.home')}
             </button>
           </div>
         </main>
@@ -156,6 +161,7 @@ const NewItems = () => {
                 <h1 className="text-xl font-bold">{t('newItems.desc')}</h1>
                 <label className="block">
                     <span className="text-gray-700">{t('newItems.images')}</span>
+                    {t('newItems.selectFile')}
                     <input
                         type='file'
                         accept='image/*'
@@ -201,7 +207,7 @@ const NewItems = () => {
                                             : 'bg-white text-gray-700 border-gray-300 hover:bg-blue-gray-100'}
                                         `}
                                         >
-                                            {it}
+                                            {translateTag('items', it)}
                                         </button>
                             ))}
                         </div>
@@ -220,7 +226,7 @@ const NewItems = () => {
                                             : 'bg-white text-gray-700 border-gray-300 hover:bg-blue-gray-100'}
                                         `}
                                         >
-                                            {it}
+                                            {translateTag('color', it)}
                                         </button>
                             ))}
                         </div>
@@ -240,7 +246,7 @@ const NewItems = () => {
                                             : 'bg-white text-gray-700 border-gray-300 hover:bg-blue-gray-100'}
                                         `}
                                         >
-                                            {it}
+                                            {translateTag('places', it)}
                                         </button>
                             ))}
                         </div>
