@@ -71,33 +71,13 @@
         "スマホ": "Smartphone",
         "バッグ": "Bag",
         "充電器": "Charger",
-        "イヤホン": "Earphones"
+        "イヤホン": "Earphones",
+        "パスポート": "Passport"
       },
       "places": {
-        "全域": "All areas",
-        "千代田区": "Chiyoda Ward",
-        "中央区": "Chuo Ward",
-        "港区": "Minato Ward",
-        "新宿区": "Shinjuku Ward",
-        "文京区": "Bunkyo Ward",
-        "台東区": "Taito Ward",
-        "墨田区": "Sumida Ward",
-        "江東区": "Koto Ward",
-        "品川区": "Shinagawa Ward",
-        "目黒区": "Meguro Ward",
-        "大田区": "Ota Ward",
-        "世田谷区": "Setagaya Ward",
-        "渋谷区": "Shibuya Ward",
-        "中野区": "Nakano Ward",
-        "杉並区": "Suginami Ward",
-        "豊島区": "Toshima Ward",
-        "北区": "Kita Ward",
-        "荒川区": "Arakawa Ward",
-        "板橋区": "Itabashi Ward",
-        "練馬区": "Nerima Ward",
-        "足立区": "Adachi Ward",
-        "葛飾区": "Katsushika Ward",
-        "江戸川区": "Edogawa Ward"
+        "第一ターミナル": "Terminal 1",
+        "第二ターミナル": "Terminal 2",
+        "第三ターミナル": "Terminal 3"
       },
       "color": {
         "茶色": "Brown",
